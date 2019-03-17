@@ -1,0 +1,21 @@
+{
+  "name": "koa-book-pro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node ./start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "YeWills",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.4.1"
+  },
+  "devDependencies": {
+   
+  }
+}
