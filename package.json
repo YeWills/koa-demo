@@ -13,9 +13,8 @@
   "author": "YeWills",
   "license": "MIT",
   "dependencies": {
-    "koa": "^2.4.1"
+    "koa": "^2.4.1",
+    "koa-bodyparser": "^4.2.1"
   },
-  "devDependencies": {
-   
-  }
+  "devDependencies": {}
 }
