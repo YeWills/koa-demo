@@ -66,3 +66,63 @@ app.listen(3000)
 //   await next();
 //   ctx.body = 'hellow world'
 // })
+
+
+- 路由中间件koa-router 源码浅析
+模拟路由中间件
+class Router{
+  constructor(){
+    this._routers = [];
+  }
+  get(url, handler){
+    this._routers.push({
+      url:url,
+      method:'GET',
+      handler
+    })
+  }
+  routes(){
+    return async (ctx, next) => {
+      const {method, url} = ctx;
+      const matchedRouter = this._routers.find(r => r.method === method && r.url === url);
+      if( matchedRouter &&
+        matchedRouter.handler){
+          await matchedRouter.handler(context, next);
+        }else{
+          await next();
+        }
+    }
+  }
+}
+
+路由模式
+const Koa = require('koa');
+const Router = require('koa-router');
+const app = new Koa();
+const router = new Router();
+router.get('/', async (ctx, next)=>{ //定义路径为‘/’的路由规则
+                                    //对路由进行处理的函数
+})
+app.use(router.routes()); //通过use方法注册路由中间件
+
+非路由模式
+app.use(async (ctx, next)=>{
+  console.log(ctx.method)
+  if(ctx.url=== '/' && ctx.method === "GET"){
+    ctx.type ='html';
+    let html = `
+    <h1>登录<\h1>
+    <form method = "POST" action= "/">
+    <p>用户名</p>
+    <input name="userName" /><br/>
+    <p>密码</p>
+    <input name="password" type="password" /><br/>
+    <button type="submit">submit</button>
+    </form>
+    `
+    ctx.body=html;
+  }else if(ctx.url === '/' && ctx.method === 'POST'){
+    let postData = ctx.request.body;
+    ctx.body = postData;
+  }
+})
