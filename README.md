@@ -145,7 +145,31 @@ router.get('/home/:id/:name'  ---对应 http://localhost:3000/home/01/admin
 - Http.request 服务端 跨域请求的demo--->如何通过服务端转发请求，解决跨域问题--参看git branch -- http-request
 可以将本次提交类推为 使用127.0.0.1域名下如何通过服务端转发至不同域名下的接口进行请求
 
-ctx.request.body 与 koa-bodyparser，ctx.request.querystring 、 ctx.request.query与ctx.query 
+- ctx.request.body 与 koa-bodyparser，ctx.request.querystring 、 ctx.request.query与ctx.query 
 (关于koa-bodyparser 请参看git branch koa-bodyparser)
 get 请求参数的获取：koa-router封装了Request对象，可以通过ctx.request.querystring 、 ctx.request.query与ctx.query 获取get请求参数，因此get请求参数的获取不需要插件；
 post 请求的参数koa无法获取，只能通过中间件koa-bodyparser，当使用了此中间件后，Request对象就多了一个body属性(ctx.request.body)，里面可以获取到具体的post参数
+
+- URL 的7个部分组成：
+scheme:[//[user[:password]@]host[:post][/path][?query][#fragemnt]
+scheme:使用协议 如FTP、HTTP等
+user[:password] : 表示访问资源的用户和密码，常见于FTP协议
+host 主机
+port 端口
+path 访问资源路径
+query 请求数据，以？开头
+fragment 定位锚点，以#开头，可用于快速定位网页对应段落
+
+- 常用http状态码
+1** 消息   100 继续，继续响应剩余部分，如已完成，可忽略
+2** 成功   
+3** 重定向  301 永久移动； 302 临时移动； 304 未修改，请求资源对比上次没有修改
+4** 请求错误 401 未授权 ； 403 禁止； 404 未找到；
+5** 和 6** 服务器错误  500 服务器内部错误； 503 服务不可用；
+
+- require('querystring')
+可用来做 encodeURIComponent decodeURIComponent 的功能，
+id=1 <===> id%3D1  二者之间的互换
+也可用来序列化或反序列化如：
+{type:1,name:'abc'}  <===> type=1&name=abc  二者之间的互换
+详见p68页
