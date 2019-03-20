@@ -137,3 +137,11 @@ router.get(/app/deleteuser)
 router.post(/app/user) //新增用户id
 router.edit(/app/user:id) 编辑名字为id的用户
 router.delete(/app/user:id) 删除名字为id的用户
+
+- 两种方式的get url设计 (问号和斜杠写法)
+router.get('/home'  ---对应 http://localhost:3000/home?id=01&name=admin
+router.get('/home/:id/:name'  ---对应 http://localhost:3000/home/01/admin
+
+- Http.request 服务端 跨域请求的demo--->如何通过服务端转发请求，解决跨域问题--参看git branch -- http-request
+可以将本次提交类推为 使用127.0.0.1域名下如何通过服务端转发至不同域名下的接口进行请求
+
