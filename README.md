@@ -126,3 +126,14 @@ app.use(async (ctx, next)=>{
     ctx.body = postData;
   }
 })
+
+- RESTful 规范
+常规设置接口：
+router.get(/app/adduser)
+router.get(/app/edituser)
+router.get(/app/deleteuser)
+基于RESTful规范设计的API，全局只提供唯一的URI /app/user
+设计如下：
+router.post(/app/user) //新增用户id
+router.edit(/app/user:id) 编辑名字为id的用户
+router.delete(/app/user:id) 删除名字为id的用户
