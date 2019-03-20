@@ -1,128 +1,18 @@
-- get 请求：
-http://127.0.0.1:3000/?search=koa&keywords=contex
-const Koa = require('koa')
+根目录下启动npm start；
+在任意目录下，可选根目录，打开git bash（利用其Linux集成工具）
+一定要按照如下顺序执行命令
+```
+//注册test用户的登录的Token加密方式
+curl -d "username=test" http://localhost:3000/api/login
+curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1NTMwNDIzMzksImV4cCI6MTU1MzA0NTkzOX0.qsK19cq7UiTvwVw18ScC4RiX5H673qs6AKdc2FCnE4Y" http://127.0.0.1:3000/api/userInfo
 
-const app = new Koa()
-app.use(async ctx=>{
-  ctx.response.body = {
-    url : ctx.request.url,
-    query:ctx.request.query,
-    querystring:ctx.request.querystring,
-  }
-})
-app.listen(3000)
+//注册admin用户的登录的Token加密方式
+curl -d "username=admin" http://localhost:3000/api/login
+curl -H "Authorization: Bearer adminadminadminadminadminadminciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE1NTMwNDIzMzksImV4cCI6MTU1MzA0NTkzOX0.qsK19cq7UiTvw" http://127.0.0.1:3000/api/userInfo
+```
 
-{"url":"/?search=koa&keywords=contex","query":{"search":"koa","keywords":"contex"},"querystring":"search=koa&keywords=contex"}
+本示例，通过post('/api/login' 接口是router内每个使用了jwt的接口，都必须设置HEAR的token信息才能正常访问接口，
+如果没有使用jwt，那么这个接口可不用在hear上设置token信息也可正常访问，如本示例的/api/noUseToken 接口
 
-- post请求：
-const Koa = require('koa')
-const app = new Koa()
-app.use(async (ctx)=>{
-  let postdata = '';
-  ctx.req.on('data', (data)=>{
-    postdata +=data;
-  })
-  ctx.req.on('end', ()=>{
-    console.log(postdata);
-  })
-})
-app.listen(3000)
+本示例解说在3.2.4章节
 
-使用git bach 执行命令 curl -d "param1=abc&param2=qqw" http://localhost:3000/
-
-- 哪里可以执行console
-如下，其实console在哪里都可以执行，只是只有当在浏览器上输入http://localhost:3000/ 或者 执行相关命令时才会被触发执行。
-app.use(async (ctx)=>{
-  let postdata = '';
-  console.log('可以打印') //外层console不执行
-  ctx.req.on('data', (data)=>{
-      console.log('可以执行console')
-    postdata +=data;
-  })
-  ctx.req.on('end', ()=>{
-      console.log('可以执行console')
-    console.log(postdata);
-  })
-})
-
-- logger中间件小demo
-const Koa = require('koa')
-
-const app = new Koa()
-const logger = async function(ctx, next){
-  console.log(ctx.method,ctx.host + ctx.url)
-  await next();
-}
-app.use(logger)
-app.use(async (ctx, next)=>{
-  // console.log(ctx.method,ctx.host + ctx.url)
-  // await next();
-  ctx.body = 'hellow world'
-})
-app.listen(3000)
-
-// app.use(async (ctx, next)=>{
-//   console.log(ctx.method,ctx.host + ctx.url)
-//   await next();
-//   ctx.body = 'hellow world'
-// })
-
-
-- 路由中间件koa-router 源码浅析
-模拟路由中间件
-class Router{
-  constructor(){
-    this._routers = [];
-  }
-  get(url, handler){
-    this._routers.push({
-      url:url,
-      method:'GET',
-      handler
-    })
-  }
-  routes(){
-    return async (ctx, next) => {
-      const {method, url} = ctx;
-      const matchedRouter = this._routers.find(r => r.method === method && r.url === url);
-      if( matchedRouter &&
-        matchedRouter.handler){
-          await matchedRouter.handler(context, next);
-        }else{
-          await next();
-        }
-    }
-  }
-}
-
-路由模式
-const Koa = require('koa');
-const Router = require('koa-router');
-const app = new Koa();
-const router = new Router();
-router.get('/', async (ctx, next)=>{ //定义路径为‘/’的路由规则
-                                    //对路由进行处理的函数
-})
-app.use(router.routes()); //通过use方法注册路由中间件
-
-非路由模式
-app.use(async (ctx, next)=>{
-  console.log(ctx.method)
-  if(ctx.url=== '/' && ctx.method === "GET"){
-    ctx.type ='html';
-    let html = `
-    <h1>登录<\h1>
-    <form method = "POST" action= "/">
-    <p>用户名</p>
-    <input name="userName" /><br/>
-    <p>密码</p>
-    <input name="password" type="password" /><br/>
-    <button type="submit">submit</button>
-    </form>
-    `
-    ctx.body=html;
-  }else if(ctx.url === '/' && ctx.method === 'POST'){
-    let postData = ctx.request.body;
-    ctx.body = postData;
-  }
-})
