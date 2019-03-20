@@ -13,8 +13,11 @@
   "author": "YeWills",
   "license": "MIT",
   "dependencies": {
+    "http": "^0.0.0",
     "koa": "^2.4.1",
-    "koa-bodyparser": "^4.2.1"
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "querystring": "^0.2.0"
   },
   "devDependencies": {}
 }
