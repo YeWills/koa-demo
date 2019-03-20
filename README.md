@@ -145,3 +145,7 @@ router.get('/home/:id/:name'  ---对应 http://localhost:3000/home/01/admin
 - Http.request 服务端 跨域请求的demo--->如何通过服务端转发请求，解决跨域问题--参看git branch -- http-request
 可以将本次提交类推为 使用127.0.0.1域名下如何通过服务端转发至不同域名下的接口进行请求
 
+ctx.request.body 与 koa-bodyparser，ctx.request.querystring 、 ctx.request.query与ctx.query 
+(关于koa-bodyparser 请参看git branch koa-bodyparser)
+get 请求参数的获取：koa-router封装了Request对象，可以通过ctx.request.querystring 、 ctx.request.query与ctx.query 获取get请求参数，因此get请求参数的获取不需要插件；
+post 请求的参数koa无法获取，只能通过中间件koa-bodyparser，当使用了此中间件后，Request对象就多了一个body属性(ctx.request.body)，里面可以获取到具体的post参数
