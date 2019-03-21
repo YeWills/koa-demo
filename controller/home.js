@@ -13,13 +13,12 @@ module.exports = {
         ctx.response.body = '<h1>HOME page /:id/:name</h1>';
     },
     login: async (ctx, next) => {
-        ctx.response.body = `<form action="/user/register" method="post">
-              <input name="name" type="text" placeholder="请输入用户名：ikcamp"/> 
-              <br/>
-              <input name="password" type="text" placeholder="请输入密码：123456"/>
-              <br/> 
-              <button>GoGoGo</button>
-            </form>`;
+        //ctx.render并非ctx自带的原生方法，而是
+        // koa-nunjucks-2绑定到上下文上的，
+        // home/login 其实是views/home/login.html路径
+        await ctx.render('home/login',{
+            btnName: 'GoGoGo'
+        });
     },
     register: async (ctx, next) => {
         let {name,password} = ctx.request.body;
