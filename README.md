@@ -15,3 +15,6 @@ ctx.render并非ctx自带的原生方法，而是koa-nunjucks-2绑定到上下�
 
  本例使用了koa-static，来区别加载 html引用的静态文件main.css,提高性能；
  对应章节为5.3.4
+
+ 
+ 模拟koa-json简易实现，同时将多个中间件统一到一个文件夹中管理优化 5.4.1
