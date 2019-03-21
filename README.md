@@ -12,3 +12,6 @@ ctx.render并非ctx自带的原生方法，而是koa-nunjucks-2绑定到上下�
  home/login 其实是views/home/login.html路径
 
  讲解模板koa-nunjucks的使用，以及如何通过模板引擎，集成 render方法到ctx中。
+
+ 本例使用了koa-static，来区别加载 html引用的静态文件main.css,提高性能；
+ 对应章节为5.3.4
