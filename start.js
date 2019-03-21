@@ -1,2 +1,2 @@
 
-require('./server/index.js')
+require('./app.js')
