@@ -173,3 +173,12 @@ id=1 <===> id%3D1  二者之间的互换
 也可用来序列化或反序列化如：
 {type:1,name:'abc'}  <===> type=1&name=abc  二者之间的互换
 详见p68页
+
+
+- upload-file branch 讲解了 使用koa-multer，做一个文件上传的功能，并且重命名文件，非常好的功能
+- web-pro branch讲解了 讲解模板koa-nunjucks的使用，以及如何通过模板引擎，集成 render方法到ctx中
+  此提交比较简单，适合专门用来理解 koa-nunjucks的使用
+- pro-static branch 是基于web-pro的延伸，讲解了 
+    1.讲解模板koa-nunjucks的使用，以及如何通过模板引擎，集成 render方法到ctx中。
+    2.本例使用了koa-static，来区别加载 html引用的静态文件main.css,提高性能； 对应章节为5.3.4
+    3.模拟koa-json简易实现，同时将多个中间件统一到一个文件夹中管理优化 5.4.1
