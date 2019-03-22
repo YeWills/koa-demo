@@ -5,7 +5,11 @@ const nunjucks = require('koa-nunjucks-2');
 const staticFiles = require('koa-static');
 const miSend = require('./mi-send');
 const miLog = require('./mi-log');
+const miHttpError = require('./mi-http-error');
 module.exports = (app) => {
+    app.use(miHttpError({
+        errorPageFolder: path.resolve(__dirname, '../errorPage')
+    }));
     app.use(miLog({
         env: app.env,
         projectName: 'koa2-tutorial',
