@@ -25,3 +25,5 @@ ctx.render并非ctx自带的原生方法，而是koa-nunjucks-2绑定到上下�
  npm start后，随便输入一个不存在的路由，达到404的效果，如：
  http://127.0.0.1:3000/tttt
  就会显示404错误页面
+
+ 增加 mi-rule功能，类似别名的形式，以前引用一个文件，可能要require('./controller/home')，用了本次提交的mi-rule功能后，只能要用app.controller.home就可以了，具体看本次提交的具体内容
