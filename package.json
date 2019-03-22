@@ -1,23 +1,20 @@
 {
-  "name": "koa-book-pro",
+  "name": "code",
   "version": "1.0.0",
   "description": "",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./start.js"
+    "start": "node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "author": "YeWills",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "koa": "^2.4.1",
-    "koa-bodyparser": "^4.2.1",
+    "ip": "^1.1.5",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
     "koa-nunjucks-2": "^3.0.2",
     "koa-router": "^7.4.0",
-    "koa-static": "^5.0.0"
-  },
-  "devDependencies": {}
+    "koa-static": "^4.0.2",
+    "log4js": "^2.5.3"
+  }
 }
