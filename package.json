@@ -13,6 +13,7 @@
   "author": "YeWills",
   "license": "MIT",
   "dependencies": {
+    "fs": "^0.0.1-security",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
