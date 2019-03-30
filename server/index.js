@@ -3,15 +3,21 @@ const bodyparser = require('koa-bodyparser')
 const router = require('koa-router')()
 var cors = require('koa2-cors');
 const app = new Koa()
- router.get('/', async (ctx, next) => {
-    ctx.response.body = `<h1>index page</h1>`
+const views = require('koa-views')
+const serve = require('koa-static')
+const { resolve } = require('path')
+const handlePath = path => resolve(__dirname, path)
+
+console.log(handlePath('../pages/static'))
+
+app.use(serve(handlePath('../pages/static')))
+app.use(views(handlePath('../pages')), {
+  extension: 'html'
 })
-router.get('/home', async (ctx, next) => {
-    ctx.response.body = '<h1>HOME page</h1>'
+app.use(async (ctx) => {
+  await ctx.render('index.html')
 })
-router.get('/404', async (ctx, next) => {
-    ctx.response.body = '<h1>404 Not Found</h1>'
-})
+
 app.use(cors()) // 解决跨域
 app.use(bodyparser())// 解析post参数
 app.use(router.routes())// 调用路由中间件

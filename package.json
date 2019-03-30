@@ -17,6 +17,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
+    "koa-views": "^6.2.0",
     "koa2-cors": "^2.0.6",
     "nodemon": "^1.18.10"
   },
