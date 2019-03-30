@@ -10,7 +10,6 @@ app.use(cors()) // 解决跨域
 
 app.use(async (ctx,next)=>{
    if(ctx.url === '/getFile' && ctx.method === "GET"){
-     console.log(666)
     const fpath = path.join(__dirname, './files/test.xlsx');
     const fstat = await stat(fpath);
     if (fstat.isFile()) {
