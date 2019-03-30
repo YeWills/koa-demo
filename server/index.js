@@ -3,6 +3,9 @@ const bodyparser = require('koa-bodyparser')
 const router = require('koa-router')()
 var cors = require('koa2-cors');
 const app = new Koa()
+
+app.use(cors()) // 解决跨域，跨域代码最好放在所有中间件前面
+
 const views = require('koa-views')
 const serve = require('koa-static')
 const { resolve } = require('path')
@@ -18,7 +21,6 @@ app.use(async (ctx) => {
   await ctx.render('index.html')
 })
 
-app.use(cors()) // 解决跨域
 app.use(bodyparser())// 解析post参数
 app.use(router.routes())// 调用路由中间件
 app.use(router.allowedMethods())// 对异常状态码处理
