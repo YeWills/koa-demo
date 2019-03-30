@@ -1,32 +1,21 @@
 const Koa = require('koa')
 const bodyparser = require('koa-bodyparser')
-
+const router = require('koa-router')()
+var cors = require('koa2-cors');
 const app = new Koa()
-const logger = async function(ctx, next){
-  console.log(ctx.method,ctx.host + ctx.url)
-  await next();
-}
-app.use(logger)
-app.use(bodyparser())
-app.use(async (ctx, next)=>{
-  console.log(ctx.method)
-  if(ctx.url=== '/' && ctx.method === "GET"){
-    ctx.type ='html';
-    let html = `
-    <h1>登录<\h1>
-    <form method = "POST" action= "/">
-    <p>用户名</p>
-    <input name="userName" /><br/>
-    <p>密码</p>
-    <input name="password" type="password" /><br/>
-    <button type="submit">submit</button>
-    </form>
-    `
-    ctx.body=html;
-  }else if(ctx.url === '/' && ctx.method === 'POST'){
-    let postData = ctx.request.body;
-    ctx.body = postData;
-  }
+ router.get('/', async (ctx, next) => {
+    ctx.response.body = `<h1>index page</h1>`
 })
-app.listen(3000)
-
+router.get('/home', async (ctx, next) => {
+    ctx.response.body = '<h1>HOME page</h1>'
+})
+router.get('/404', async (ctx, next) => {
+    ctx.response.body = '<h1>404 Not Found</h1>'
+})
+app.use(cors()) // 解决跨域
+app.use(bodyparser())// 解析post参数
+app.use(router.routes())// 调用路由中间件
+app.use(router.allowedMethods())// 对异常状态码处理
+app.listen(3000, ()=>{
+  console.log('server is running at http://localhost:3000')
+})
