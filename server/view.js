@@ -1,24 +1,17 @@
 const Koa = require('koa')
 const bodyparser = require('koa-bodyparser')
 const router = require('koa-router')()
-var cors = require('koa2-cors');
 const app = new Koa()
 
-app.use(cors()) // 解决跨域，跨域代码最好放在所有中间件前面
-
 const views = require('koa-views')
-const serve = require('koa-static')
 const { resolve } = require('path')
 const handlePath = path => resolve(__dirname, path)
 
-console.log(handlePath('../pages/static'))
-
-app.use(serve(handlePath('../pages/static')))
 app.use(views(handlePath('../pages')), {
   extension: 'html'
 })
-app.use(async (ctx) => {
-  await ctx.render('index.html')
+router.get('/gethtml', async (ctx, next) => {
+    await ctx.render('/static/test.html')
 })
 
 app.use(bodyparser())// 解析post参数
