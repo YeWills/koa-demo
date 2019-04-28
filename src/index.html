@@ -8,6 +8,12 @@
             width: 200px;
             border-radius: 2em;
         }
+        .img-hidden{
+            display: none;
+        }
+        .img-show{
+            display: inline-block;
+        }
     </style>
     <script src="./index.js"></script>
 </head>
@@ -18,7 +24,7 @@
 		<div class="box-item" onclick="download()">download post xls</div>
 		<div class="box-item" onclick="clickImg()">click show img</div>
 		<div class="box-item" onclick="clickF()">click json</div>
-	    <img src="" id="img" alt="loading">
+	    <img src="" class="img-hidden" id="img" alt="loading">
 	</div>
 </body>
 </html>

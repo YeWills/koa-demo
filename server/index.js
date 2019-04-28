@@ -23,19 +23,20 @@ app.use(async (ctx,next)=>{
       ctx.type = extname(fpath);
       ctx.body = fs.createReadStream(fpath);
     }
-   }if(ctx.url === '/getImg' && ctx.method === "GET"){
+  }else if(ctx.url === '/getImg' && ctx.method === 'GET'){
     const fpath = path.join(__dirname, './files/baby.jpg');
     const fstat = await stat(fpath);
     if (fstat.isFile()) {
       ctx.type = extname(fpath);
       ctx.body = fs.createReadStream(fpath);
     }
-   }else if(ctx.url === '/getData'){
+  }else if(ctx.url === '/getData'){
     ctx.body = {abc: 'good boy'};
   }else if(ctx.url === '/' && ctx.method === 'POST'){
     let postData = ctx.request.body;
     ctx.body = postData;
   }else{
+    console.log(4)
     ctx.body='welcome to home page!!';
   }
 })

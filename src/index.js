@@ -11,11 +11,11 @@ function ajax({url,type,isFile}){
 }
 
 function clickF(){
-    console.log(res)
-    window.location.href ='/getFile';
+    ajax({url:'/getData'}).then(res=>{
+        console.log(res)
+    })
 }
 function download(){
-    console.log(res)
     window.location.href ='/getFile';
 }
 
@@ -35,6 +35,7 @@ function clickImg(){
         var urlCreator = window.URL || window.webkitURL;
         var imageUrl = urlCreator.createObjectURL(blob);
         var image = document.querySelector('#img');
+        image.className = 'img-show';
         image.src = imageUrl;
     })
 }
