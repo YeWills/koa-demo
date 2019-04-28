@@ -4,19 +4,35 @@ const router = require('koa-router')()
 var cors = require('koa2-cors');
 const fs = require('fs');
 const path = require('path');
+const serve = require('koa-static');
+
 const extname = path.extname;
 const app = new Koa()
 app.use(cors()) // 解决跨域
 
+const handlePath = p => path.resolve(__dirname, p)
+
+app.use(serve(handlePath('../src')))
+
 app.use(async (ctx,next)=>{
    if(ctx.url === '/getFile' && ctx.method === "GET"){
+    console.log(ctx.url)
     const fpath = path.join(__dirname, './files/test.xlsx');
     const fstat = await stat(fpath);
     if (fstat.isFile()) {
       ctx.type = extname(fpath);
       ctx.body = fs.createReadStream(fpath);
     }
-   }else if(ctx.url === '/' && ctx.method === 'POST'){
+   }if(ctx.url === '/getImg' && ctx.method === "GET"){
+    const fpath = path.join(__dirname, './files/baby.jpg');
+    const fstat = await stat(fpath);
+    if (fstat.isFile()) {
+      ctx.type = extname(fpath);
+      ctx.body = fs.createReadStream(fpath);
+    }
+   }else if(ctx.url === '/getData'){
+    ctx.body = {abc: 'good boy'};
+  }else if(ctx.url === '/' && ctx.method === 'POST'){
     let postData = ctx.request.body;
     ctx.body = postData;
   }else{
