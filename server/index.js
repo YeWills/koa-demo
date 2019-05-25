@@ -2,11 +2,27 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const Http = require('http');
 const Querystring = require('querystring')
+const rp = require('request-promise-native')
 
 const app = new Koa();
 const router = new Router();
 
-const Service = {
+const useRequest = {
+    search: async (params) => {
+        // const url = `https://read.douban.com/j/suggest_v2?q=nice`
+        const url = `https://read.douban.com/j/suggest_v2?${Querystring.stringify(params)}`
+        const res = await rp(url)
+        let body
+        try {
+          body = JSON.parse(res)
+        } catch (err) {
+          console.log(err)
+        }
+        return body
+    }
+}
+
+const useHttp = {
     search: async (kw = '') => {
         return new Promise((resolve, reject) => {
           //http://m.maoyan.com/ajax/search?kw=捉妖记&cityId=10
@@ -17,23 +33,19 @@ const Service = {
                     cityId: 10
                 })
             }, (res) => {
-
                 res.setEncoding('utf8');
-
                 let data = [];
-
                 res.on('data', (chunk) => {
                     data.push(chunk)
                 }).on('end', () => {
                     resolve(data.join(''));
                 });
-
             }).end();
         });
     }
 }
 
-const Render = (data = {}, kw = '') => {
+const Render = (data = {}, kw = '', home) => {
 
     let arr = [
         '<style>',
@@ -47,10 +59,15 @@ const Render = (data = {}, kw = '') => {
         '.item{padding:10px 0 10px 0;border-bottom:1px solid #d2d2d2;display:flex;}',
         '.info{margin-left:10px}',
         '</style>',
-        '<form><input name="kw" value="' + kw + '"/><button>搜索</button></form>'
+        '<form action="/movie"><input name="kw" value="' + kw + '"/><button>搜索</button></form>',
+        '<form action="/j/suggest_v2"><input name="q" /><button>使用request-promise-native发请求</button></form>',
     ];
 
-    data.movies && data.movies.list.forEach(item => {
+    if(home !== 'isHomePage'){
+        arr.push('<form action="/"><button>回到home page</button></form>')
+    }
+
+    data && data.movies && data.movies.list.forEach(item => {
         arr.push('<div class="item">')
         arr.push('<img src="' + item.img.replace('w.h', '64.90') + '"/>')
         arr.push('<div class="info">')
@@ -67,9 +84,20 @@ const Render = (data = {}, kw = '') => {
 }
 
 router.get('/', async (ctx, next) => {
+    ctx.body = Render('', '', 'isHomePage');
+});
+
+router.get('/movie', async (ctx, next) => {
     let { kw } = ctx.query;
-    let data = await Service.search(kw);
+    let data = await useHttp.search(kw);
     ctx.body = Render(JSON.parse(data), kw);
+});
+
+router.get('/j/suggest_v2', async (ctx, next) => {
+    let data = await useRequest.search(ctx.query);
+    ctx.body = '<p>搜索结果为：   '+JSON.stringify(data.suggests.join('...'))+'</p>'+
+    '<form action="/j/suggest_v2"><input name="q" /><button>使用request-promise-native发请求</button></form>'+
+    '<form action="/"><button>回到home page</button></form>';
 });
 
 app.use(router.routes()).listen(8080, () => {
