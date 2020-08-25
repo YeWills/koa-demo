@@ -8,6 +8,8 @@ const app = new Koa();
 const router = new Router();
 const admin = require('./middleware/admin')();
 app.use(bodyParser());
+var cors = require('koa2-cors');
+app.use(cors())
 
 router
   .post('/api/login', async (ctx, next) => {

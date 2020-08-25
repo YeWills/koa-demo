@@ -13,11 +13,12 @@
   "author": "YeWills",
   "license": "MIT",
   "dependencies": {
+    "jsonwebtoken": "^8.1.1",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-jwt": "^3.3.0",
     "koa-router": "^7.4.0",
-    "jsonwebtoken": "^8.1.1",
-    "koa-jwt": "^3.3.0"
+    "koa2-cors": "^2.0.6"
   },
   "devDependencies": {}
 }
