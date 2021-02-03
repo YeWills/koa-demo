@@ -11,6 +11,7 @@ const useRequest = {
     search: async (params) => {
         // const url = `https://read.douban.com/j/suggest_v2?q=nice`
         const url = `https://read.douban.com/j/suggest_v2?${Querystring.stringify(params)}`
+        // const url = 'http://m.maoyan.com/ajax/search?kw=%E6%8D%89%E5%A6%96%E8%AE%B0&cityId=10'
         const res = await rp(url)
         let body
         try {
@@ -60,7 +61,7 @@ const Render = (data = {}, kw = '', home) => {
         '.info{margin-left:10px}',
         '</style>',
         '<form action="/movie"><input name="kw" value="' + kw + '"/><button>搜索</button></form>',
-        '<form action="/j/suggest_v2"><input name="q" /><button>使用request-promise-native发请求</button></form>',
+        '<form action="/j/suggest_v2"><input name="q"  value="nice"/><button>使用request-promise-native发请求</button></form>',
     ];
 
     if(home !== 'isHomePage'){
@@ -95,8 +96,8 @@ router.get('/movie', async (ctx, next) => {
 
 router.get('/j/suggest_v2', async (ctx, next) => {
     let data = await useRequest.search(ctx.query);
-    ctx.body = '<p>搜索结果为：   '+JSON.stringify(data.suggests.join('...'))+'</p>'+
-    '<form action="/j/suggest_v2"><input name="q" /><button>使用request-promise-native发请求</button></form>'+
+    ctx.body = '<p>搜索结果为：   '+JSON.stringify(data)+'</p>'+
+    '<form action="/j/suggest_v2"><input name="q" value="nice" /><button>使用request-promise-native发请求</button></form>'+
     '<form action="/"><button>回到home page</button></form>';
 });
 
